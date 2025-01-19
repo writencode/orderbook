@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "b0590039-5d09-43c4-97cf-25e05b2d16a4",
+		"name": "OrderBookApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41263433"
+	},
+	"item": [
+		{
+			"name": "Add Buy Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "symbol",
+							"value": "IBM",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "BUY",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "100.56",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "45",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Sell Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "symbol",
+							"value": "IBM",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "SELL",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "101",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "20",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Buy At Bellow Sale",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "symbol",
+							"value": "IBM",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "SELL",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "101",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "20",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Stores the orderId in an environment or global variable\r",
+							"var orders = pm.response.json();\r",
+							"var orderId = orders[0].id;\r",
+							"// Stores the orderId in an environment variable\r",
+							"pm.environment.set(\"first_order_id\", orderId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get OrderBook for IBM",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
