@@ -7,8 +7,8 @@ import java.util.TreeMap;
 
 public class OrderBook {
     private final String symbol;
-    private TreeMap<BigDecimal, List<Order>> bids;
-    private TreeMap<BigDecimal, List<Order>> offers;
+    private final TreeMap<BigDecimal, List<Order>> bids;
+    private final TreeMap<BigDecimal, List<Order>> offers;
 
 
     public OrderBook(String symbol) {
