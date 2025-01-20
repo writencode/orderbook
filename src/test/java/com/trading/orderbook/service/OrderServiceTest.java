@@ -4,10 +4,8 @@ import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.trading.orderbook.model.BidOrder;
-import com.trading.orderbook.model.OfferOrder;
-import com.trading.orderbook.model.Order;
-import com.trading.orderbook.model.OrderBook;
+import com.trading.orderbook.model.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -158,7 +156,7 @@ class OrderServiceTest {
   @Test
   void cancelPartiallyFilledOrderSuccessfully() {
     BidOrder bidOrder = new BidOrder("AAPL", BigDecimal.valueOf(100), 10);
-    OfferOrder offerOrder = new OfferOrder("AAPL", BigDecimal.valueOf(100), 5);
+    OfferOrder offerOrder = new OfferOrder("AAPL", BigDecimal.valueOf(100), 4);
     when(orderBook.addOrder(bidOrder)).thenReturn(bidOrder);
     when(orderBook.addOrder(offerOrder)).thenReturn(offerOrder);
     when(orderBook.orderbookDepth()).thenReturn(emptyList());
@@ -168,14 +166,19 @@ class OrderServiceTest {
     orderService.createOrder(offerOrder);
 
     // Simulate partial fill
-    bidOrder.setUnfilledQuantity(5);
+    bidOrder.setUnfilledQuantity(bidOrder.getQuantity()-offerOrder.getQuantity());
     offerOrder.setUnfilledQuantity(0);
 
     orderService.cancelOrder(bidOrder.getId().toString());
 
-    assertTrue(
+    assertFalse(
         orderService.getAllOrders().stream()
             .noneMatch(order -> order.getId().equals(bidOrder.getId())));
+    orderService.getOrderById(bidOrder.getId().toString());
+    assertEquals(0, bidOrder.getUnfilledQuantity()); //partially filled order was cancelled
+    assertEquals(4, bidOrder.getQuantity());
+    assertEquals(OrderStatus.FILLED, bidOrder.getStatus());
+
     verify(orderBook).addOrder(bidOrder);
   }
 }
