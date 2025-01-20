@@ -77,6 +77,16 @@ public abstract class Order {
     this.unfilledQuantity = unfilledQuantity;
   }
 
+  public OrderStatus getStatus() {
+    if (unfilledQuantity.equals(quantity)) {
+      return OrderStatus.OPEN;
+    } else if (unfilledQuantity == 0) {
+      return OrderStatus.FILLED;
+    } else {
+      return OrderStatus.PARTIALLY_FILLED;
+    }
+  }
+
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o);
@@ -89,6 +99,14 @@ public abstract class Order {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        .append("id", id)
+        .append("symbol", symbol)
+        .append("type", type)
+        .append("price", price)
+        .append("quantity", quantity)
+        .append("unfilledQuantity", unfilledQuantity)
+        .append("status", getStatus())
+        .toString();
   }
 }
