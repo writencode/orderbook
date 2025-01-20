@@ -41,6 +41,7 @@ The order status can be one of the following:
 Fix cancel order:
 Cancel order should delete an order only if the order is OPEN. 
 Otherwise, order quantity should be updated to amount filled, e.g. the order quantity - remaining quantity.
+Make sure that both order and orderbook are updated correctly.
 
 Market order:
 Market order is an order to buy or sell a stock at the current market price. It is a request to buy or sell a stock immediately at the best available current price.

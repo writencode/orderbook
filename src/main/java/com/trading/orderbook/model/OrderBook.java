@@ -197,9 +197,9 @@ public class OrderBook {
   }
 
   public synchronized void cancelOrder(Order o) {
-    if (o instanceof BidOrder) {
+    if (o instanceof BidOrder && bids.containsKey(o.getPrice())) {
       bids.get(o.getPrice()).remove(o);
-    } else {
+    } else if (o instanceof OfferOrder && offers.containsKey(o.getPrice())) {
       offers.get(o.getPrice()).remove(o);
     }
   }

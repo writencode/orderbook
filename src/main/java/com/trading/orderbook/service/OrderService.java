@@ -5,6 +5,8 @@ import com.trading.orderbook.model.OrderBook;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.trading.orderbook.model.OrderStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,12 +42,19 @@ public class OrderService {
   }
 
   public void cancelOrder(String id) {
-    Order o = getOrderById(id);
-    if (o != null) {
-      orderBookService.cancelOrder(o);
-      orders.remove(o);
-      return;
+    Order order = getOrderById(id);
+    if (order != null) {
+      if (order.getStatus() == OrderStatus.OPEN) {
+        orderBookService.cancelOrder(order);
+        orders.remove(order);
+      } else {
+        int filledQuantity = order.getQuantity() - order.getUnfilledQuantity();
+        order.setQuantity(filledQuantity);
+        order.setUnfilledQuantity(0); //fixing a bug
+        orderBookService.cancelOrder(order);
+      }
+    } else {
+      throw new RuntimeException("Could not find order with id: " + id);
     }
-    throw new RuntimeException("Could not find order with id: " + id);
   }
 }

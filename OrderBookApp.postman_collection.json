@@ -97,7 +97,7 @@
 			"response": []
 		},
 		{
-			"name": "Add Buy At Bellow Sale",
+			"name": "Add Sell At Bellow Buy",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -116,12 +116,12 @@
 						},
 						{
 							"key": "price",
-							"value": "101",
+							"value": "99.01",
 							"type": "text"
 						},
 						{
 							"key": "quantity",
-							"value": "20",
+							"value": "55",
 							"type": "text"
 						}
 					]
