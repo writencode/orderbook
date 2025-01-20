@@ -76,8 +76,8 @@ public class OrderController {
    * @return a 204 No Content response
    */
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
-    orderService.deleteOrder(id);
+  public ResponseEntity<Void> cancelOrder(@PathVariable String id) {
+    orderService.cancelOrder(id);
     return ResponseEntity.noContent().build();
   }
 }

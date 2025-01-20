@@ -39,10 +39,12 @@ public class OrderService {
     return adjustedOrder;
   }
 
-  public void deleteOrder(String id) {
+  public void cancelOrder(String id) {
     Order o = getOrderById(id);
     if (o != null) {
+      orderBookService.cancelOrder(o);
       orders.remove(o);
+      return;
     }
     throw new RuntimeException("Could not find order with id: " + id);
   }

@@ -1,5 +1,6 @@
 package com.trading.orderbook.service;
 
+import com.trading.orderbook.model.Order;
 import com.trading.orderbook.model.OrderBook;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,5 +17,10 @@ public class OrderBookService {
   public synchronized OrderBook getOrderBook(String symbol) {
     symbolToOrderBook.putIfAbsent(symbol, new OrderBook(symbol));
     return symbolToOrderBook.get(symbol);
+  }
+
+  public void cancelOrder(Order o) {
+    OrderBook orderBook = symbolToOrderBook.get(o.getSymbol());
+    orderBook.cancelOrder(o);
   }
 }

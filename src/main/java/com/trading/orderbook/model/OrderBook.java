@@ -74,7 +74,7 @@ public class OrderBook {
   private synchronized <T extends Order> T match(T order) {
     if (order instanceof BidOrder) {
       return matchBidOrder(order);
-    }  else {
+    } else {
       return matchOfferOrder(order);
     }
   }
@@ -193,6 +193,14 @@ public class OrderBook {
       return adBidOrder((BidOrder) order);
     } else {
       return addOfferOrder((OfferOrder) order);
+    }
+  }
+
+  public synchronized void cancelOrder(Order o) {
+    if (o instanceof BidOrder) {
+      bids.get(o.getPrice()).remove(o);
+    } else {
+      offers.get(o.getPrice()).remove(o);
     }
   }
 

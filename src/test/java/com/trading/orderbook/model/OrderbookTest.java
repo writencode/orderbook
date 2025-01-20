@@ -22,7 +22,8 @@ class OrderbookTest {
     BidOrder bidOrder = new BidOrder("AAPL", BigDecimal.valueOf(100), 10);
     BidOrder result = orderBook.adBidOrder(bidOrder);
     assertEquals(result.getQuantity(), result.getUnfilledQuantity());
-    assertTrue(orderBook.orderbookDepth().stream().anyMatch(depth -> depth.type() == OrderType.BUY));
+    assertTrue(
+        orderBook.orderbookDepth().stream().anyMatch(depth -> depth.type() == OrderType.BUY));
   }
 
   @Test
@@ -30,7 +31,8 @@ class OrderbookTest {
     OfferOrder offerOrder = new OfferOrder("AAPL", BigDecimal.valueOf(200), 5);
     OfferOrder result = orderBook.addOfferOrder(offerOrder);
     assertEquals(result.getQuantity(), result.getUnfilledQuantity());
-    assertTrue(orderBook.orderbookDepth().stream().anyMatch(depth -> depth.type() == OrderType.SELL));
+    assertTrue(
+        orderBook.orderbookDepth().stream().anyMatch(depth -> depth.type() == OrderType.SELL));
   }
 
   @Test
@@ -39,7 +41,7 @@ class OrderbookTest {
     orderBook.addOfferOrder(offerOrder);
     BidOrder bidOrder = new BidOrder("AAPL", BigDecimal.valueOf(100), 5);
     BidOrder result = orderBook.adBidOrder(bidOrder);
-    //bid and offer orders are matched
+    // bid and offer orders are matched
     assertEquals(0, bidOrder.getUnfilledQuantity());
     assertEquals(0, offerOrder.getUnfilledQuantity());
     assertTrue(orderBook.orderbookDepth().isEmpty());
@@ -51,8 +53,8 @@ class OrderbookTest {
     orderBook.adBidOrder(bidOrder);
     OfferOrder offerOrder = new OfferOrder("AAPL", BigDecimal.valueOf(100), 5);
     OfferOrder result = orderBook.addOfferOrder(offerOrder);
-      assertEquals(0, bidOrder.getUnfilledQuantity());
-      assertEquals(0, offerOrder.getUnfilledQuantity());
+    assertEquals(0, bidOrder.getUnfilledQuantity());
+    assertEquals(0, offerOrder.getUnfilledQuantity());
     assertTrue(orderBook.orderbookDepth().isEmpty());
   }
 
@@ -63,7 +65,7 @@ class OrderbookTest {
     BidOrder bidOrder = new BidOrder("AAPL", BigDecimal.valueOf(100), 10);
     BidOrder result = orderBook.adBidOrder(bidOrder);
     assertEquals(5, bidOrder.getUnfilledQuantity());
-      assertEquals(0, offerOrder.getUnfilledQuantity());
+    assertEquals(0, offerOrder.getUnfilledQuantity());
     List<OrderBookDepth> depths = orderBook.orderbookDepth();
     assertEquals(1, depths.size());
     assertEquals(OrderType.BUY, depths.get(0).type());
